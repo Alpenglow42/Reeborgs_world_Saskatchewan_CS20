@@ -1,0 +1,121 @@
+
+
+
+a = 0      
+b = 0               
+c = 0
+x = 0
+y = 0
+z = 1
+o = 0
+m = 1 #tracks movement
+tl = 0 # tracks left turns
+
+postive_path = 0
+negative_path = 0
+berries = 0
+path_length = 0
+path = 0
+
+
+
+def turn_right():
+    turn_left()
+    turn_left()
+    turn_left()
+    
+def turn_around():
+    turn_left()
+    turn_left()
+    
+def find_north(): # turn left 4 times to complete circle check for north each time
+    while not is_facing_north():
+        turn_left()
+        if is_facing_north():
+            print("north found")
+ 
+def take_object():
+    while object_here():
+        global o
+        take()
+        o += 1
+
+        
+def side_path():
+    """turns and detects side paths"""
+    global negative_path, postive_path, berries
+    while front_is_clear():
+        turn_left()
+        postive_path += 1
+        
+        if front_is_clear():
+            print ("side passage")
+            
+            print(postive_path)
+        elif not front_is_clear():
+            turn_left()
+            postive_path += 1
+            print(postive_path)
+        if postive_path == 1:
+            print("passage left")
+            postive_path = 0
+            return True
+            #might need to reset postive_path to 0
+            
+        elif postive_path == 2:
+            pass
+        elif postive_path == 3:
+            print("passage right")
+            postive_path = 0
+            return True
+            #might need to reset postive_path to 0
+            
+        if is_facing_north():
+            break        
+
+            
+def length_finder(is_side_path): # counts steps and maps side paths
+    global berries, path_length
+    if is_side_path == True:
+        while front_is_clear():
+            move()
+            path_length += 1
+            if object_here():
+                take()
+                berries += 1
+        if not front_is_clear():
+            turn_around()
+            print (path_length)
+        for x in range(path_length):
+            move()
+            
+        while not is_facing_north():
+            turn_left()
+            path_length = 0
+        for ber in range(berries):
+            put()
+        if is_facing_north():
+            
+            berries = 0
+        #while front_is_clear(): """need for it to deposit found berries and exit"""
+           # move()
+           # path_length += 1
+            #if object_here():
+             #   berries += 1
+    
+                
+            
+            
+ 
+#code here
+#step 5
+think(1)
+while is_facing_north():
+    move()
+    is_side_path = side_path()
+    length_finder(is_side_path)
+    if at_goal():
+        break
+
+        
+    
