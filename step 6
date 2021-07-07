@@ -1,0 +1,42 @@
+
+
+
+
+from library import turn_right, turn_around, find_north
+
+
+def reverse_course():
+    move()
+    move()
+    turn_right()
+    move()
+    move()
+    move()
+    turn_right()
+    move()
+    move()
+    
+    
+
+
+
+
+
+
+find_north()    
+move()
+while not at_goal():
+    move()
+    turn_left()
+    move()
+    move()
+    move()
+    turn_left()
+    move()
+    move()
+    if object_here():
+        take()
+        turn_around()
+        reverse_course()
+if at_goal():
+    put()
