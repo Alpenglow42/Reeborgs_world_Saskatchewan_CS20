@@ -1,0 +1,134 @@
+
+
+
+
+from library import turn_right, turn_around, find_north
+
+
+count = 0
+ 
+"""Make function for 1 and for 0"""
+
+ 
+ 
+def one_is_loniest(): #draws 1
+    global count
+    find_north()
+    move()
+    rose()
+    
+    for x in range(4):
+        
+        move()
+        rose()
+        count = 1
+        
+def two_is_loniest(): #draws 1
+    turn_right()
+    
+    for x in range(4):
+        
+        move()
+        rose()
+ 
+def zero_is_loser(): #draws 0
+    global count
+    if count == 2 or count == 1:
+        turn_right()
+        for x in range(4):
+            
+            move()
+            rose()
+        turn_left()
+        for x in range(2):
+            
+            move()
+            rose()
+        find_north()
+        for x in range(4):
+            
+            move()
+            rose()
+        turn_left()
+        move()
+        rose()
+        turn_around()
+        for x in range(1):
+            move()
+            count = 2
+    if count == 3:
+        turn_left()
+        for x in range (4):
+            rose()
+            move()
+        turn_right()
+        rose()
+        move()
+        rose()
+        move()
+        turn_right()
+        rose()
+        for x in range(4):
+            
+            move()
+            rose()
+        turn_right()
+        
+        move()
+        rose()
+
+def finish():
+    turn_left()
+    move()
+    turn_left()
+    while not at_goal():
+        move()
+                 
+ 
+def in_between_numbers():
+    global count
+    if count == 1:
+        turn_right()
+        move()
+        move()
+        rose()
+    if count == 2:
+        move()
+        move()
+        rose()
+    if count == 3:
+        turn_left()
+        move()
+        move()
+        rose()
+        
+    
+ 
+def rose():
+    if not object_here():
+        put()
+###was trying to solve by making rose() automatically show up after each move in functions. But couldn't figure it out.
+
+"""function_list = [one_is_loniest(), zero_is_loser]
+
+def final_move():
+    for move() in (function_list):
+        plant_a_rose()
+move()
+final_move()"""
+
+
+think(1)
+move()
+one_is_loniest()
+in_between_numbers()
+zero_is_loser()
+in_between_numbers()
+zero_is_loser()
+in_between_numbers()
+two_is_loniest()
+count = 3
+in_between_numbers()
+zero_is_loser()
+finish()
+
