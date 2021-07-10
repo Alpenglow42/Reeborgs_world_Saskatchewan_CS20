@@ -1,0 +1,40 @@
+
+
+
+
+from library import turn_right, turn_around, find_north
+
+movex = 0
+
+movey = 0
+
+banana = 0
+
+
+
+
+def border_walk():
+    global banana, movex, movey
+    
+    while front_is_clear():
+        move()
+        movex += 1
+        if wall_in_front():
+            turn_left()
+            while front_is_clear():
+                move()
+                movey += 1
+            if wall_in_front():
+                turn_left()
+                for x in range(movex):
+                    move()
+                    if wall_in_front():
+                        turn_left()
+                        for x in range (movey):
+                            move()
+                        if object_here():
+                            done()
+                            
+                            
+put()
+border_walk()
