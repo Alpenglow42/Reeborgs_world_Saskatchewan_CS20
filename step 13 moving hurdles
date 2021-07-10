@@ -1,0 +1,37 @@
+
+
+
+
+
+from library import turn_right, turn_around, find_north
+
+
+
+
+move_up = 0
+
+"""for any size of hurdle"""
+def hurdle_1():
+    global move_up
+    while not at_goal():
+        if front_is_clear():##added if statement from solution 2 to step 10
+            move()
+        if wall_in_front():
+            turn_left()
+            while wall_on_right():
+                move()
+                move_up += 1
+            if not wall_on_right():
+                turn_right()
+                if front_is_clear():
+                    move()
+                    turn_right()
+                    for x in range (move_up):
+                        move()
+                    if wall_in_front():
+                        turn_left()
+                        move_up = 0
+                        
+                        
+                        
+hurdle_1()
