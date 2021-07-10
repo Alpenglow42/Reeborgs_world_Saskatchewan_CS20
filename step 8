@@ -1,0 +1,45 @@
+
+
+
+
+
+from library import turn_right, turn_around, find_north
+
+
+flower = 0
+count = 0
+
+
+
+
+def pick_flower():
+    global flower
+    while object_here():
+        take()
+        flower += 1
+
+def mow_lawn():
+    
+    while not object_here():
+        global count
+        move()
+        count += 1 #postive count
+        if object_here():
+            pick_flower()
+        if wall_in_front():
+            turn_around()
+            while count != 1:
+                move()
+                count -= 1
+                if count == 1:
+                    for x in range (flower):
+                        put()
+                    if front_is_clear():
+                        move()
+                        if at_goal():
+                            done()
+                            break
+    
+think(1)   
+mow_lawn()
+    
