@@ -1,0 +1,126 @@
+# the field size and number of carrots per spot changes each time.
+
+
+
+from library import turn_right, turn_around, find_north
+
+
+#find a corner then start sweeping from there.
+
+carrot = 0
+
+move_xs = 0
+tl = 0
+move_up = 0
+xpos = 0
+
+
+
+
+
+def find_corner():
+    
+    find_north()
+    turn_left()
+    if not front_is_clear():
+        turn_left()
+        while front_is_clear():
+            move()
+    while front_is_clear():
+        move()
+        if not front_is_clear():
+            turn_left()
+            while front_is_clear():
+                move()
+    
+    
+        
+        
+def at_end():
+    global move_up, xpos
+    if move_up % 2 == 0:
+        print(xpos)
+        print(move_up)
+        #even row count enter on right side.
+        if not front_is_clear() and wall_on_right():
+            turn_around()
+            for move in range(xpos):
+                move()
+                if not front_is_clear():
+                    for car in range(carrot):
+                        put()
+                    find_corner()
+            
+    if move_up % 2 !=0:
+        #enter from far left after colleting last row of carrots
+        if not front_is_clear():
+            find_north()
+            if not front_is_clear():
+                for car in range(carrot):
+                    put()
+                find_corner()
+    
+    # have reeborg count moves up.
+    #if moves up is even, reeborg will enter on far right, go past bin
+    # and needs to turn around to finish and deposit.
+    
+    #if moves up is odd reeborg will enter on left and finish at end where
+    #carrot deposit bin is. Then move directly to finish after deposit.
+        
+                  
+def deposit():
+    for num in range(carrot):
+        put()
+
+
+
+def carrot_picker():
+    global carrot
+    while object_here():
+        take()
+        carrot += 1
+
+def row_by_row():
+    global tl, move_up, xpos
+    find_north()
+    turn_right()
+    while front_is_clear():
+        carrot_picker()
+        move()
+        xpos += 1 
+        
+        if tl == 1 and not front_is_clear():
+            tl = 0
+            xpos = 0 
+            turn_right()
+            move_up += 1
+            # odd number of rows
+            if front_is_clear():
+                carrot_picker()
+                move()
+                carrot_picker()
+                turn_right()
+            else:
+                at_end()
+
+        
+        if not front_is_clear():
+            turn_left()
+            move_up += 1
+            xpos = 0
+            #even number rows
+            if front_is_clear():
+                carrot_picker()
+                move()
+                carrot_picker()
+                turn_left()
+                tl += 1
+            else:
+                at_end()
+
+think(1)
+if not at_goal():
+    find_corner()
+    row_by_row()
+elif at_goal:
+    row_by_row()
