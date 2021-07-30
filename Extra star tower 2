@@ -1,0 +1,75 @@
+
+
+
+
+from library import turn_right, turn_around, find_north
+
+y = 1
+x = 0
+fn = 0
+st = 0
+gh = 0
+
+
+
+def tripple_stack():
+    
+    for star in range(1):
+        put()
+
+def take_back():
+    for star in range(1):
+        take()
+
+def reverse():
+    global gh
+    while front_is_clear():
+        move()
+        if not front_is_clear() and gh != 1:
+            turn_left()
+            for x in range(2):
+                #move()
+                if front_is_clear():
+                    move()
+                    #find_height()
+                elif not front_is_clear():
+                    gh = 1
+            if gh != 1:
+                find_height()
+            if gh == 1:
+                go_home()
+
+
+def go_home():
+    if not front_is_clear():
+        find_north()
+        turn_left()
+        while front_is_clear():
+            move()
+            if not front_is_clear():
+                done()
+        
+        
+
+    
+def find_height():
+    global y, st
+    find_north()
+    while front_is_clear():
+        tripple_stack()
+        move()
+        y += 1
+        if not right_is_clear():
+            st += 1
+            
+        
+        if not front_is_clear():
+            turn_around()
+            #take_back()
+            reverse()
+            
+            
+set_max_nb_steps(2000)
+think(2)                
+#tripple_stack()
+find_height()
